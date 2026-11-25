@@ -4,7 +4,8 @@
 const WHATSAPP_NUMBER = "966563253823";
 // قفل خفيف: اكتبي سؤال وجواب يعرفونه انتم الثنين. لو الجواب فاضي ينلغي القفل.
 // (الجواب يظهر لمن يفتح الكود، فهذا حاجز بسيط مو حماية.)
-const GATE = { question: "What song did you send me that i still love listening to ", answer: "neon kitchen" };
+// الجواب ممكن يكون نص واحد أو قائمة، مثل ["اسم الأغنية", "Song Name"].
+const GATE = { question: "What song did you send me that I still love listening to?", answer: "neon kitchen" };
 
 const store = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -15,7 +16,7 @@ const dates = [
   ["ديت فود تركس", ["فود ترك", "فود تركس", "عربات اكل", "food trucks"]],
   ["ديت سيارة أح", ["سيارة", "لفة بالسيارة"]],
   ["ديت مكتبة وو الخ", ["مكتبة", "كتب"]],
-  ["ديت حديقة ", ["حديقة", "بارك"]],
+  ["ديت حديقة بصيح", ["حديقة", "بارك"]],
   ["ديت سرير", ["سرير"]],
   ["نجرب مطاعم", ["مطاعم", "مطعم"]],
   ["عشوائية بشكل", ["عشوائية", "طلعة عشوائية"]],
@@ -25,10 +26,10 @@ const dates = [
   ["ديت مكتبة مره ثانيه ونقرإ كتب ونشتغل", ["مكتبة مرة ثانية", "نقرا ونشتغل"]],
   ["مطل ونسولف", ["مطل", "نسولف"]],
   ["ديت رسم", ["رسم"]],
-  ["ديت ناكل مطاعم عشوائيه ", ["مطعم ", "اكل"]],
-  ["نرسم على ظهر بعض", ["نرسم على ظهر بعض", "ظهر بعض"]],
+  ["ديت ناكل اكل اعشوائى ", ["مطعم", "اكل"]],
+  ["بحر", ["البحر", "بحر"]],
   ["ديت سياكل", ["سياكل", "دراجات"]],
-  ["ابحر", ["بحر", "البحر"]],
+  ["امازونيا", ["امازونيا", "amazonia"]],
   ["ديت نصنع فخّار", ["فخار"]],
   ["بوليفارد وورلد وناكل", ["بوليفارد وورلد", "بوليفارد"]],
   ["الدرعية ديت وغيوم وفخامه", ["الدرعية", "درعية"]],
@@ -277,20 +278,47 @@ byId("copy").addEventListener("click", async () => {
   }
 });
 
-// ===== القفل الخفيف =====
-if (GATE.answer && store.get("gate") !== "ok") {
-  const gate = byId("gate");
+// ===== القفل + مقدمة «Only you» =====
+const gateAnswers = [].concat(GATE.answer).filter(Boolean).map(normalize);
+const gate = byId("gate");
+const intro = byId("intro");
+
+function showIntro() {
+  gate.hidden = true;
+  intro.hidden = false;
+  document.body.classList.add("locked");
+  const delay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1800;
+  setTimeout(() => { byId("intro-q").hidden = false; }, delay);
+}
+
+function enterSite() {
+  store.set("intro", "done");
+  gate.hidden = true;
+  intro.hidden = true;
+  document.body.classList.remove("locked");
+}
+
+byId("intro-go").addEventListener("click", () => {
+  enterSite();
+  byId("game").scrollIntoView({ block: "start" });
+  clue.focus({ preventScroll: true });
+});
+
+const needsIntro = store.get("intro") !== "done";
+
+if (gateAnswers.length && store.get("gate") !== "ok") {
   document.body.classList.add("locked");
   gate.hidden = false;
   byId("gate-q").textContent = GATE.question;
   byId("gate-form").addEventListener("submit", event => {
     event.preventDefault();
-    if (normalize(byId("gate-answer").value) === normalize(GATE.answer)) {
+    if (gateAnswers.includes(normalize(byId("gate-answer").value))) {
       store.set("gate", "ok");
-      document.body.classList.remove("locked");
-      gate.hidden = true;
+      if (needsIntro) showIntro(); else enterSite();
     } else {
       byId("gate-msg").textContent = "مو هذي. جرّب مرة ثانية.";
     }
   });
+} else if (needsIntro) {
+  showIntro();
 }
