@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="لعبة صغيرة من برق لسياف">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0c0c0c">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="بعد كل كول | لسياف">
+  <meta property="og:description" content="لعبة صغيرة من برق لسياف">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A5%3C/text%3E%3C/svg%3E">
+  <title>بعد كل كول | لسياف</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./game.js" defer></script>
+</head>
+<body>
+  <div id="gate" class="gate" hidden>
+    <form id="gate-form" class="panel">
+      <h2 id="gate-q" lang="en" dir="auto"></h2>
+      <div class="entry">
+        <input id="gate-answer" dir="auto" required autocomplete="off" placeholder="اكتب اسم الأغنية">
+        <button type="submit" class="button" lang="en">Play it back ♥</button>
+      </div>
+      <p id="gate-msg" class="feedback" role="status"></p>
+    </form>
+  </div>
+
+  <section id="intro" class="gate" hidden aria-labelledby="intro-title">
+    <div class="intro-box">
+      <article class="panel card">
+        <h2 id="intro-title" class="en" lang="en">Only you <span class="red">♥</span></h2>
+        <p>تتذكر حساب تويتر اللي سويته لك؟ كنت أنزل صوري فيه، وحرفيًا ما كان فيه أحد غيرك.</p>
+        <p>ويومها كنت أقول لنفسي عادي. يعني مسوي لك حساب كامل عشان تشوف صوري وأقول عادي؟ 😭</p>
+        <p class="en" lang="en">Anyway, I made you another little corner of the internet. ♥</p>
+      </article>
+      <div id="intro-q" class="intro-q" hidden>
+        <p class="en q" lang="en">When did you first feel like there was something between us?</p>
+        <p class="hint">جاوبني وقت ما تحب: بقسم «رد عليّ» آخر الموقع، أو بالواقع.</p>
+        <button type="button" id="intro-go" class="button">يلا، <bdi lang="en">Guess</bdi> ←</button>
+      </div>
+    </div>
+  </section>
+
+  <header class="wrap">
+    <a href="#top">من برق لسياف <span class="red">♥</span></a>
+    <a href="#game"><bdi lang="en">Play</bdi> ↙</a>
+  </header>
+
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div>
+        <p class="red">لسياف، عندي لك لعبة</p>
+        <h1>بعد كل <em>كول.</em></h1>
+        <p class="intro">
+          كنت أقول لنفسي عادي.
+          طيب ليه بعد كل كول كنت أطلع بسبب ثاني يخلّيني أبيك بحياتي؟
+        </p>
+        <a class="button" href="#game">يلا، <bdi lang="en">Guess</bdi> ←</a>
+      </div>
+      <div class="call">
+        <span lang="en" dir="ltr">CALL ENDED</span>
+        <strong aria-hidden="true">♥</strong>
+        <p>وأنا للحين أفكر فيك.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="game" aria-labelledby="clue">
+      <div class="status">
+        <span id="round" dir="auto"></span>
+        <progress id="progress" aria-label="تقدّم اللعبة"></progress>
+      </div>
+      <h2 id="clue" tabindex="-1">يلا نبدأ</h2>
+
+      <form id="guess" hidden>
+        <label for="answer">وش تتوقع؟</label>
+        <div class="entry">
+          <input id="answer" dir="auto" required autocomplete="off" enterkeyhint="send" placeholder="اكتب تخمينك">
+          <button type="submit" class="button">خمّن</button>
+        </div>
+      </form>
+      <p id="feedback" class="feedback" role="status"></p>
+      <div id="actions" class="actions" hidden>
+        <button type="button" class="quiet" id="hint"><bdi lang="en">Hint</bdi></button>
+        <button type="button" class="quiet" id="reveal">قل لي الإجابة</button>
+      </div>
+
+      <div id="reveal-card" class="reveal" hidden>
+        <p id="solution" class="red" tabindex="-1"></p>
+        <p id="story"></p>
+        <button type="button" id="next" class="button"></button>
+      </div>
+
+      <div id="ending" hidden>
+        <p>
+          بعد كل كول كنت ألقى سبب ثاني. ومع الوقت استوعبت إنك صرت شخص مره مهم بحياتي.
+          أحب إني أقدر أكون أنا معك، وأبي أكتشف معك مشاعر جديدة.
+        </p>
+        <p>أبي أقولها لك أكثر، حتى بالواقع. <strong>أحبك يا سياف.</strong></p>
+        <p class="aside">
+          كنت أقول عن <bdi lang="en">RM</bdi> لابتوبي إنه زوجي، وأنت قمت تقلّده وتسوي نفسك لابتوب.
+          الحين أقولها لك بدون مزح: أنت أهم من <bdi lang="en">RM</bdi> بكثير،
+          وهو و كل لابتوب بالدنيا <bdi lang="en">nothing compared to you</bdi>.
+          والله إنك أحلى من النسخة الأصلية 🖤
+        </p>
+        <a href="#notes" class="button">افتح <bdi lang="en">My Notes</bdi> ←</a>
+        <button type="button" class="quiet" id="restart">العب من جديد</button>
+      </div>
+      <noscript>فعّل JavaScript عشان تقدر تلعب.</noscript>
+    </section>
+
+    <section id="notes" class="section" hidden>
+      <h2><bdi lang="en">My Notes</bdi> عنك</h2>
+      <div class="notes-grid">
+        <article class="panel">
+          <h3>وشو اكثر شي يعجبني بسياف</h3>
+          <div class="note-text">انه يضحكني كثيررر
+
+انه يحاول يفهمني
+
+شخصيته بس موب مره فيه اشياء تقهر مره
+
+اسلوبه
+
+عنده تيشرتات حلوه
+
+لما يتفلسف صح ودي اجلده بس مرات اجحم
+
+ثقته يعني بس
+
+مدري يمكن هو مايطلع بس متحمل سوالفي شويتن
+
+جنتل
+
+طلع جانب ثاني مني كنت احسب موب موجود
+
+جانبه الرياضي يجذبني الصدق
+
+صوته
+
+احبه احسني كذا مشاعر كثيره له مره احبه
+
+27🤓</div>
+        </article>
+        <article class="panel">
+          <h3>وشو اكثر شي اكرها بسياف</h3>
+          <div class="note-text">ماعرف انت صادق ولا تطقطق ولا جدي
+
+توترني مرات
+
+ماعرف احسه يفكر بشكل مره طويل مره
+
+احسه موب واضح معي
+
+يعصب واجد بس موب علي مره
+
+ياجللل اشياء
+
+ابي اطقه
+
+احسه عنده اسرار كثيره انه فيه اشياء كثيره احسني ماعرفها عنه
+
+ماعرف وشوو يبغى مني تعبت
+
+بعض الاشياء حلال عليه وحرام علي
+
+علزققققق ماحب عدم الوضح هذا يجننيي مقدر مقدر
+
+اعترف وبطبخلك
+
+واكلكلككككك ابيهه الحين بنجن</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="dates" class="section" hidden>
+      <h2>ودي نسوي هذي كلها</h2>
+      <p class="intro">ونكون نطلع طلعات مب بس بيت وقلة أدب</p>
+      <button type="button" id="draw" class="button">اسحب لنا <bdi lang="en">Date</bdi> 🎲</button>
+      <p id="date-pick" class="feedback" role="status"></p>
+      <ul id="date-list" class="chips"></ul>
+    </section>
+
+    <section id="talk" class="section" hidden>
+      <h2>ودي نسولف عنّا</h2>
+      <p>
+        أحس إننا نسولف عن أشياء كثير، وإذا جينا عندنا إحنا وعن علاقتنا،
+        كأننا نتردد نجيب طاريها. ودي أسمع وش تحس وأنت قدامي،
+        وأنا بعد ودي أقول لك وش أحس.
+      </p>
+      <p>
+        للآن ما تخطيت عضت اذني. ولا لما رحنا البوليفارد وجيت بطلع وعطيتني بوسه مع رقبتي.
+        أرجع أفكر فيها وأبتسم. هالأشياء صارت قبل نخش علاقة،
+        ومن بعدها حسّيت بتردد. ودي أعرف كيف أنت تحس تجاه هالشي.
+      </p>
+      <p>
+        ودي تحس إنك مرتاح معي لدرجة تقول لي أي شي يشغلك، حتى لو كان شي يخوّفك.
+        وأنا بعد أبي أقول لك وش يخوفني.
+      </p>
+      <button type="button" id="ask" class="button">اسحب سؤال <bdi lang="en">Talk</bdi> 💬</button>
+      <p id="question-pick" class="feedback" role="status"></p>
+      <details>
+        <summary>حسيت إننا نتردد نجيب طاري علاقتنا. تحس بنفس الشي، ولا أنا بس؟</summary>
+        <p>ممكن أكون فاهمة الموضوع غلط، وأبي أسمعها منك.</p>
+      </details>
+      <details>
+        <summary>وش تحس تغيّر بيننا من يوم صرنا مع بعض؟</summary>
+        <p>أبي أعرف كيف تشوفها أنت.</p>
+      </details>
+      <details>
+        <summary>وش ودك تقوله لي بالواقع ويصعب عليك؟</summary>
+        <p>عادي لو الكلام طلع ملخبط. كلامي أنا بيطلع ملخبط بعد.</p>
+      </details>
+      <details>
+        <summary>كيف تحب أقرب منك؟</summary>
+        <p>متى تحس إنك مرتاح تبادر، ومتى تحب إني أسألك أو أعطيك وقت؟</p>
+      </details>
+    </section>
+
+    <section id="reply" class="section" hidden>
+      <h2>رد عليّ</h2>
+      <p class="intro">اكتب اللي تحس فيه، حتى لو طلع ملخبط.</p>
+      <label for="reply-text">ردك</label>
+      <textarea id="reply-text" rows="5" dir="auto" placeholder="اكتب هنا"></textarea>
+      <div class="actions">
+        <button type="button" class="button" id="send">أرسل <bdi lang="en">WhatsApp</bdi></button>
+        <button type="button" class="quiet" id="copy">انسخ الردّ</button>
+      </div>
+      <p id="reply-msg" class="feedback" role="status"></p>
+    </section>
+  </main>
+
+  <footer class="wrap">برق <span class="red">♥</span> سياف</footer>
+</body>
+</html>
