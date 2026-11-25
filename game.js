@@ -1,10 +1,10 @@
 // ===== إعداداتك =====
 // رقمك للواتساب بالصيغة الدولية بدون + وبدون صفر، مثل "9665XXXXXXXX".
 // لو تركته فاضي يفتح واتساب ويخلّيه يختار المحادثة.
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "966563253823";
 // قفل خفيف: اكتبي سؤال وجواب يعرفونه انتم الثنين. لو الجواب فاضي ينلغي القفل.
 // (الجواب يظهر لمن يفتح الكود، فهذا حاجز بسيط مو حماية.)
-const GATE = { question: "", answer: "" };
+const GATE = { question: "when did you first feel like there was somthing between us ", answer: "56" };
 
 const store = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
