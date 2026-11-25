@@ -137,3 +137,13 @@ textarea::placeholder { color: #a58d90; }
 .heart { position: fixed; top: -2.5rem; color: var(--red); pointer-events: none; z-index: 5; animation: fall linear forwards; }
 @keyframes fall { to { transform: translateY(115vh) rotate(40deg); opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { .heart { display: none; } }
+
+.intro-box { width: min(560px, 100%); display: grid; gap: 22px; }
+.intro-box .panel { width: 100%; }
+.card { background: linear-gradient(155deg, #380c14, #151112); box-shadow: 0 0 40px #ff354a22; animation: rise .6s ease-out; }
+.card h2 { margin-bottom: 12px; }
+.en { direction: ltr; text-align: right; }
+.intro-q { display: grid; gap: 10px; justify-items: start; animation: rise .6s ease-out; }
+.q { font-size: 1.15rem; margin: 0; }
+.hint { color: var(--muted); margin: 0; font-size: .9rem; }
+@media (prefers-reduced-motion: reduce) { .card, .intro-q { animation: none; } }
